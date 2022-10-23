@@ -9,7 +9,7 @@ app.use(cors());
 
 app.get('/', (req, res) => {
     res.status(200)
-        .send('Hello, World!');
+        .send('Comic Collection');
 });
 
 app.get('/comics', async(req, res) => {
