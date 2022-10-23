@@ -9,7 +9,9 @@ const Comics = () => {
             <p><strong>Count:</strong> {comics.length}</p>
             <ul>
                 {comics.map(comic => {
-                    return <li key={comic.id}>{comic.label}</li>;
+                    const { id, properties } = comic;
+                    const title = properties.title[0].value
+                    return <li key={id}>{title}</li>;
                 })}
             </ul>
         </>
