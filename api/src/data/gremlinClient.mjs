@@ -2,6 +2,8 @@ import gremlin from 'gremlin';
 
 import packageConfig from '../../package.json' assert { type: 'json' };
 
+const isCosmosDb = packageConfig.config.database.cosmosDb;
+
 const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(
     packageConfig.config.database.username,
     packageConfig.config.database.password);
@@ -16,4 +18,7 @@ const gremlinClient = new gremlin.driver.Client(
     }
 );
 
-export default gremlinClient;
+export {
+    gremlinClient,
+    isCosmosDb
+};

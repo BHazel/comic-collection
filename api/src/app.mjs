@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 
-import gremlinClient from './data/gremlinClient.mjs';
+import { gremlinClient, isCosmosDb } from './data/gremlinClient.mjs';
 
 const app = express();
 
@@ -13,8 +13,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/comics', async(req, res) => {
+    let gremlinQuery = 'g.V().hasLabel("comic")'
+    const { search } = req.query;
+    if (search) {
+        gremlinQuery += isCosmosDb
+            ? `.has('title', TextP.containing('${search}'))`
+            : `.filter({ it.getProperty('title').contains('${search}') })`;
+    }
+
     try {
-        const comics = await gremlinClient.submit('g.V()', {});
+        const comics = await gremlinClient.submit(gremlinQuery, {});
         res.status(200)
             .send(comics);
     } catch (error) {

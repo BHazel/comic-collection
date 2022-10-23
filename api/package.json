@@ -13,6 +13,7 @@
             "endpoint": "",
             "username": "",
             "password": ""
+            "cosmosDb": false
         }
     },
     "dependencies": {
