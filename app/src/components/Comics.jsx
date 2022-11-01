@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { useGlobalContext } from '../context';
 
 const Comics = () => {
@@ -11,7 +13,11 @@ const Comics = () => {
                 {comics.map(comic => {
                     const { id, properties } = comic;
                     const title = properties.title[0].value
-                    return <li key={id}>{title}</li>;
+                    return (
+                        <li key={id}>
+                            <Link to={`/comics/${id}`}>{title}</Link>
+                        </li>
+                    );
                 })}
             </ul>
         </>
