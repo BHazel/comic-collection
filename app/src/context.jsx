@@ -1,26 +1,17 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 
-import config from './config.mjs';
-
-const comicCollectionApiRootUrl = config.api.rootUrl;
+import { getComics } from './services/comicService';
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
     const [comics, setComics] = useState([]);
 
-    const getComics = async (url) => {
-        try {
-            const { data } = await axios(url);
-            setComics(data._items);
-        } catch (error) {
-            console.error(error.response);
-        }
-    };
-
     useEffect(() => {
-        getComics(`${comicCollectionApiRootUrl}/comics`);
+        getComics()
+            .then(comics => {
+                setComics(comics);
+            });
     }, []);
 
     return (
