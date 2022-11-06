@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 
 import gremlinClient from './data/gremlinClient.mjs';
+import { mapDbComic } from './services/dbComicMapper.mjs';
 
 const app = express();
 
@@ -20,7 +21,11 @@ app.get('/comics', async (req, res) => {
     }
 
     try {
-        const comics = await gremlinClient.submit(gremlinQuery, {});
+        const dbComics = await gremlinClient.submit(gremlinQuery, {});
+        const comics = dbComics._items.map(dbComic => {
+            return mapDbComic(dbComic);
+        });
+        
         res.status(200)
             .send(comics);
     } catch (error) {
@@ -34,7 +39,9 @@ app.get('/comics/:id', async (req, res) => {
     let gremlinQuery = `g.V("${id}")`;
 
     try {
-        const comic = await gremlinClient.submit(gremlinQuery, {});
+        const dbComic = await gremlinClient.submit(gremlinQuery, {});
+        const comic = mapDbComic(dbComic._items[0]);
+
         res.status(200)
             .send(comic);
     } catch (error) {
@@ -48,7 +55,9 @@ app.get('/comics/:id/sequel-reading', async (req, res) => {
     let gremlinQuery = `g.V("${id}").out('readingPrequelTo')`;
 
     try {
-        const comic = await gremlinClient.submit(gremlinQuery, {});
+        const dbComic = await gremlinClient.submit(gremlinQuery, {});
+        const comic = mapDbComic(dbComic._items[0]);
+
         res.status(200)
             .send(comic);
     } catch (error) {
@@ -62,7 +71,9 @@ app.get('/comics/:id/sequel-series', async (req, res) => {
     let gremlinQuery = `g.V("${id}").out('seriesPrequelTo')`;
     
     try {
-        const comic = await gremlinClient.submit(gremlinQuery, {});
+        const dbComic = await gremlinClient.submit(gremlinQuery, {});
+        const comic = mapDbComic(dbComic._items[0]);
+        
         res.status(200)
             .send(comic);
     } catch (error) {
