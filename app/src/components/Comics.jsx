@@ -11,11 +11,9 @@ const Comics = () => {
             <p><strong>Count:</strong> {comics.length}</p>
             <ul>
                 {comics.map(comic => {
-                    const { id, properties } = comic;
-                    const title = properties.title[0].value
                     return (
-                        <li key={id}>
-                            <Link to={`/comics/${id}`}>{title}</Link>
+                        <li key={comic.id}>
+                            <Link to={`/comics/${comic.id}`}>{comic.title}</Link>
                         </li>
                     );
                 })}
