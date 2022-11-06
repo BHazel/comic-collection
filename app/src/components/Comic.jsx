@@ -24,8 +24,8 @@ const Comic = () => {
 
     return (
         <>
-            <h1>{comic.properties.title[0].value}</h1>
-            <p><strong>Publication Year:</strong> {comic.properties.publicationYear[0].value}</p>
+            <h1>{comic.title}</h1>
+            <p><strong>Publication Date:</strong> {comic.publicationDate}</p>
         </>
     );
 };
