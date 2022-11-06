@@ -23,10 +23,23 @@ const Comic = () => {
     }
 
     return (
-        <>
+        <div className='container'>
             <h1>{comic.title}</h1>
-            <p><strong>Publication Date:</strong> {comic.publicationDate}</p>
-        </>
+            <p><a href={comic.url}>View Online</a></p>
+            
+            <div className='row'>
+                <div className='col'>
+                    <p><strong>Publication Date:</strong> {comic.publicationDate}</p>
+                    <p><strong>Story:</strong> {comic.storyTitle}</p>
+                    <p><strong>Issue: </strong> {comic.issue}</p>
+                    <p><strong>Summary: </strong>{comic.story ? comic.story : "No Summary"}</p>
+                </div>
+
+                <div className='col'>
+                    <p><img className='img-fluid' src={comic.imageUrl} /></p>
+                </div>
+            </div>
+        </div>
     );
 };
 
