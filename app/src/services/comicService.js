@@ -9,13 +9,13 @@ async function getComics(searchTerm = '') {
     }
 
     const { data } = await axios(comicsUrl);
-    return data._items;
+    return data;
 }
 
 async function getComic(comicId) {
     let comicUrl = `${config.api.rootUrl}/comics/${comicId}`;
     const { data } = await axios(comicUrl);
-    return data._items[0];
+    return data;
 }
 
 export {
