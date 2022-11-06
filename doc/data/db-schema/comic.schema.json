@@ -1,0 +1,53 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://bwhazel.uk/comic-collection-comic.schema.json",
+    "title": "Comic",
+    "description": "A comic in the comic collection.",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "The unique identifier for the comic."
+      },
+      "title": {
+        "type": "string",
+        "description": "The issue title for the comic."
+      },
+      "publicationYear": {
+        "type": "string",
+        "description": "The publication year of the comic."
+      },
+      "storyTitle": {
+        "type": "string",
+        "description": "The title(s) of the story/stories in the comic."
+      },
+      "issue": {
+        "type": "number",
+        "description": "The issue number of the comic."
+      },
+      "publicationDate": {
+        "type": "string",
+        "format": "date",
+        "description": "The publication date of the comic."
+      },
+      "summary": {
+        "type": "string",
+        "description": "A summary of the comic story/stories."
+      },
+      "url": {
+        "type": "string",
+        "format": "url",
+        "description": "The URL to the comic from the publisher or alternative repository."
+      },
+      "imageUrl": {
+        "type": "string",
+        "format": "url",
+        "description": "The URL to the image of the comic cover."
+      }
+    },
+    "required": [
+      "id",
+      "title",
+      "publicationYear"
+    ]
+  }
