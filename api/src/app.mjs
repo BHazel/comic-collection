@@ -2,12 +2,14 @@ import cors from 'cors';
 import express from 'express';
 
 import comics from './routes/comics.mjs';
+import series from './routes/series.mjs';
 
 const app = express();
 
 app.use(cors());
 
 app.use('/comics', comics);
+app.use('/series', series);
 
 app.get('/', (req, res) => {
     res.status(200)
