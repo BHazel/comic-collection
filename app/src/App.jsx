@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import Comic from './components/Comic';
-import Comics from './components/Comics';
+import Comic from './pages/Comic';
+import Comics from './pages/Comics';
 
 const App = () => {
     return (

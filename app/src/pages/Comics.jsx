@@ -6,7 +6,7 @@ const Comics = () => {
     const { comics } = useGlobalContext();
 
     return (
-        <div className='container'>
+        <main className='container'>
             <h1>Comics</h1>
             <p><strong>Count:</strong> {comics.length}</p>
             <table className='table'>
@@ -27,7 +27,7 @@ const Comics = () => {
                     })}
                 </tbody>
             </table>
-        </div>
+        </main>
     );
 };
 
