@@ -18,7 +18,18 @@ async function getComic(comicId) {
     return data;
 }
 
+async function getSequel(comicId, type) {
+    if (type !== 'series' && type !== 'reading') {
+        return;
+    }
+
+    let sequelUrl = `${config.api.rootUrl}/comics/${comicId}/sequel-${type}`;
+    const { data } = await axios(sequelUrl);
+    return data;
+}
+
 export {
     getComic,
-    getComics
+    getComics,
+    getSequel
 };
