@@ -1,5 +1,7 @@
 import gremlinClient from '../data/gremlinClient.mjs';
 
+import { mapDbSeries } from '../services/dbSeriesMapper.mjs';
+
 async function getAllSeries(req, res) {
     const { search } = req.query;
     let gremlinQuery = 'g.V().hasLabel("series")';
@@ -9,8 +11,11 @@ async function getAllSeries(req, res) {
 
     try {
         const dbSeries = await gremlinClient.submit(gremlinQuery, {});
+        const series = dbSeries._items.map(dbSeries => {
+            return mapDbSeries(dbSeries);
+        });
         res.status(200)
-            .send(dbSeries);
+            .send(series);
     } catch (error) {
         res.send(400)
             .send(error);
