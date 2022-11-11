@@ -38,7 +38,7 @@ const Comic = () => {
     }
 
     return (
-        <div className='container'>
+        <main className='container'>
             <h1>{comic.title}</h1>
             <p><a href={comic.url}>View Online</a></p>
             
@@ -59,7 +59,7 @@ const Comic = () => {
                     <p><img className='img-fluid' src={comic.imageUrl} /></p>
                 </div>
             </div>
-        </div>
+        </main>
     );
 };
 
