@@ -12,6 +12,13 @@ async function getAllSeries(searchTerm = '') {
     return data;
 }
 
+async function getSeries(seriesId) {
+    let seriesUrl = `${config.api.rootUrl}/series/${seriesId}`;
+    const { data } = await axios(seriesUrl);
+    return data;
+}
+
 export {
-    getAllSeries
+    getAllSeries,
+    getSeries
 };
