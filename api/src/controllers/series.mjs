@@ -22,6 +22,23 @@ async function getAllSeries(req, res) {
     }
 }
 
+async function getSeries(req, res) {
+    const { id } = req.params;
+    let gremlinQuery = `g.V("${id}")`;
+
+    try {
+        const dbSeries = await gremlinClient.submit(gremlinQuery, {});
+        const series = mapDbSeries(dbSeries._items[0]);
+
+        res.status(200)
+            .send(series);
+    } catch (error) {
+        res.status(400)
+            .send(error);
+    }
+}
+
 export {
-    getAllSeries
+    getAllSeries,
+    getSeries
 };
