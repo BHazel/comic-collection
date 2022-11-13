@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { useGlobalContext } from '../context';
 
 const SeriesList = () => {
@@ -14,8 +16,10 @@ const SeriesList = () => {
                 <tbody>
                     {series.map(series => {
                         return (
-                            <tr>
-                                <td>{series.title}</td>
+                            <tr key={series.id}>
+                                <td>
+                                    <Link to={`/series/${series.id}`}>{series.title}</Link>
+                                </td>
                             </tr>
                         );
                     })}
