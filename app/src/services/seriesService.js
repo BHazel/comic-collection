@@ -18,7 +18,14 @@ async function getSeries(seriesId) {
     return data;
 }
 
+async function getComics(seriesId) {
+    let seriesComicsUrl = `${config.api.rootUrl}/series/${seriesId}/comics`;
+    const { data } = await axios(seriesComicsUrl);
+    return data;
+}
+
 export {
     getAllSeries,
+    getComics,
     getSeries
 };
