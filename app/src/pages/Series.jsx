@@ -30,25 +30,37 @@ const Series = () => {
     return (
         <main className='container'>
             <h1>{series.title}</h1>
-            <h2>Comics</h2>
-            <table className='table'>
-                <thead>
-                    <th scope='col'>Title</th>
-                    <th scope='col'>Publication Date</th>
-                    <th scope='col'>Story</th>
-                </thead>
-                <tbody>
-                    {comics.map(comic => {
-                        return (
-                            <tr key={comic.id}>
-                                <td><Link to={`/comics/${comic.id}`}>{comic.title}</Link></td>
-                                <td>{comic.publicationDate}</td>
-                                <td>{comic.storyTitle}</td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+            <p><a href={series.url}>View Online</a></p>
+
+            <div className='row'>
+                <div className='col'>
+                <h2>Comics</h2>
+                    <table className='table'>
+                        <thead>
+                            <th scope='col'>Title</th>
+                            <th scope='col'>Publication Date</th>
+                            <th scope='col'>Story</th>
+                        </thead>
+                        <tbody>
+                            {comics.map(comic => {
+                                return (
+                                    <tr key={comic.id}>
+                                        <td><Link to={`/comics/${comic.id}`}>{comic.title}</Link></td>
+                                        <td>{comic.publicationDate}</td>
+                                        <td>{comic.storyTitle}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className='col'>
+                    <p><img className='img-fluid' src={series.imageUrl} /></p>
+                </div>
+            </div>
+
+            
         </main>
     )
 };
