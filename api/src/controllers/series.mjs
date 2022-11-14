@@ -1,4 +1,5 @@
 import gremlinClient from '../data/gremlinClient.mjs';
+import { mapDbComic } from '../services/dbComicMapper.mjs';
 
 import { mapDbSeries } from '../services/dbSeriesMapper.mjs';
 
@@ -38,7 +39,26 @@ async function getSeries(req, res) {
     }
 }
 
+async function getComics(req, res) {
+    const { id } = req.params;
+    let gremlinQuery = `g.V("${id}").in("issuePartOf")`;
+
+    try {
+        const dbComics = await gremlinClient.submit(gremlinQuery, {});
+        const comics = dbComics._items.map(dbComic => {
+            return mapDbComic(dbComic);
+        });
+
+        res.status(200)
+            .send(comics);
+    } catch (error) {
+        res.status(400)
+            .send(error);
+    }
+}
+
 export {
     getAllSeries,
+    getComics,
     getSeries
 };
