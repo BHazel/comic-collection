@@ -1,8 +1,8 @@
 import cors from 'cors';
 import express from 'express';
 
-import comics from './routes/comics.mjs';
-import series from './routes/series.mjs';
+import comics from './routes/comics'
+import series from './routes/series';
 
 const app = express();
 

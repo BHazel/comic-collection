@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getComic, getComics, getSequelReading, getSequelSeries } from '../controllers/comics.mjs';
+import { getComic, getComics, getSequelReading, getSequelSeries } from '../controllers/comics';
 
 const router = express.Router();
 router.get('/', getComics);

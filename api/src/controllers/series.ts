@@ -1,7 +1,7 @@
-import gremlinClient from '../data/gremlinClient.mjs';
-import { mapDbComic } from '../services/dbComicMapper.mjs';
+import gremlinClient from '../data/gremlinClient';
+import { mapDbComic } from '../services/dbComicMapper';
 
-import { mapDbSeries } from '../services/dbSeriesMapper.mjs';
+import { mapDbSeries } from '../services/dbSeriesMapper';
 
 async function getAllSeries(req, res) {
     const { search } = req.query;

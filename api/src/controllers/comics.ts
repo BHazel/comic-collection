@@ -1,5 +1,5 @@
-import gremlinClient from '../data/gremlinClient.mjs';
-import { mapDbComic } from '../services/dbComicMapper.mjs';
+import gremlinClient from '../data/gremlinClient';
+import { mapDbComic } from '../services/dbComicMapper';
 
 async function getComics(req, res) {
     const { search } = req.query;
