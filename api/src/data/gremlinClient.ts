@@ -1,13 +1,13 @@
 import gremlin from 'gremlin';
 
-import packageConfig from '../../package.json' assert { type: 'json' };
+import config from '../config';
 
 const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(
-    packageConfig.config.database.username,
-    packageConfig.config.database.password);
+    config.database.username,
+    config.database.password);
 
 const gremlinClient = new gremlin.driver.Client(
-    packageConfig.config.database.endpoint,
+    config.database.endpoint,
     {
         authenticator,
         traversalsource: 'g',
