@@ -1,17 +1,17 @@
 import cors from 'cors';
-import express from 'express';
+import express, { Express, Request, Response } from 'express';
 
 import comics from './routes/comics'
 import series from './routes/series';
 
-const app = express();
+const app: Express = express();
 
 app.use(cors());
 
 app.use('/comics', comics);
 app.use('/series', series);
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
     res.status(200)
         .send('Comic Collection');
 });

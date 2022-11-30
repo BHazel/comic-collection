@@ -1,16 +1,21 @@
+import { Request, Response } from 'express';
+
+import type { DbResponse } from '../types/db';
+import type { Comic } from '../types/comic';
+
 import gremlinClient from '../data/gremlinClient';
 import { mapDbComic } from '../services/dbComicMapper';
 
-async function getComics(req, res) {
+async function getComics(req: Request, res: Response): Promise<void> {
     const { search } = req.query;
-    let gremlinQuery = 'g.V().hasLabel("comic")'
+    let gremlinQuery: string = 'g.V().hasLabel("comic")'
     if (search) {
         gremlinQuery += `.has('title', TextP.containing('${search}'))`;
     }
 
     try {
-        const dbComics = await gremlinClient.submit(gremlinQuery, {});
-        const comics = dbComics._items.map(dbComic => {
+        const dbComics: DbResponse = await gremlinClient.submit(gremlinQuery, {});
+        const comics: Comic[] = dbComics._items.map(dbComic => {
             return mapDbComic(dbComic);
         });
         
@@ -22,13 +27,13 @@ async function getComics(req, res) {
     }
 }
 
-async function getComic(req, res) {
+async function getComic(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    let gremlinQuery = `g.V("${id}")`;
+    let gremlinQuery: string = `g.V("${id}")`;
 
     try {
-        const dbComic = await gremlinClient.submit(gremlinQuery, {});
-        const comic = mapDbComic(dbComic._items[0]);
+        const dbComic: DbResponse = await gremlinClient.submit(gremlinQuery, {});
+        const comic: Comic = mapDbComic(dbComic._items[0]);
 
         res.status(200)
             .send(comic);
@@ -38,13 +43,13 @@ async function getComic(req, res) {
     }
 }
 
-async function getSequelReading(req, res) {
+async function getSequelReading(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    let gremlinQuery = `g.V("${id}").out('readingPrequelTo')`;
+    let gremlinQuery: string = `g.V("${id}").out('readingPrequelTo')`;
 
     try {
-        const dbComic = await gremlinClient.submit(gremlinQuery, {});
-        const comic = mapDbComic(dbComic._items[0]);
+        const dbComic: DbResponse = await gremlinClient.submit(gremlinQuery, {});
+        const comic: Comic = mapDbComic(dbComic._items[0]);
 
         res.status(200)
             .send(comic);
@@ -54,13 +59,13 @@ async function getSequelReading(req, res) {
     }
 }
 
-async function getSequelSeries(req, res) {
+async function getSequelSeries(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    let gremlinQuery = `g.V("${id}").out('seriesPrequelTo')`;
+    let gremlinQuery: string = `g.V("${id}").out('seriesPrequelTo')`;
     
     try {
-        const dbComic = await gremlinClient.submit(gremlinQuery, {});
-        const comic = mapDbComic(dbComic._items[0]);
+        const dbComic: DbResponse = await gremlinClient.submit(gremlinQuery, {});
+        const comic: Comic = mapDbComic(dbComic._items[0]);
         
         res.status(200)
             .send(comic);

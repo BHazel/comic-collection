@@ -1,18 +1,23 @@
+import { Request, Response } from 'express';
+
+import type { DbResponse } from '../types/db';
+import type { Comic } from '../types/comic';
+import type { Series } from '../types/series';
+
 import gremlinClient from '../data/gremlinClient';
 import { mapDbComic } from '../services/dbComicMapper';
-
 import { mapDbSeries } from '../services/dbSeriesMapper';
 
-async function getAllSeries(req, res) {
+async function getAllSeries(req: Request, res: Response): Promise<void> {
     const { search } = req.query;
-    let gremlinQuery = 'g.V().hasLabel("series")';
+    let gremlinQuery: string = 'g.V().hasLabel("series")';
     if (search) {
         gremlinQuery += `.has('title', TextP.containing('${search}'))`;
     }
 
     try {
-        const dbSeries = await gremlinClient.submit(gremlinQuery, {});
-        const series = dbSeries._items.map(dbSeries => {
+        const dbSeries: DbResponse = await gremlinClient.submit(gremlinQuery, {});
+        const series: Series[] = dbSeries._items.map(dbSeries => {
             return mapDbSeries(dbSeries);
         });
         res.status(200)
@@ -23,13 +28,13 @@ async function getAllSeries(req, res) {
     }
 }
 
-async function getSeries(req, res) {
+async function getSeries(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    let gremlinQuery = `g.V("${id}")`;
+    let gremlinQuery: string = `g.V("${id}")`;
 
     try {
-        const dbSeries = await gremlinClient.submit(gremlinQuery, {});
-        const series = mapDbSeries(dbSeries._items[0]);
+        const dbSeries: DbResponse = await gremlinClient.submit(gremlinQuery, {});
+        const series: Series = mapDbSeries(dbSeries._items[0]);
 
         res.status(200)
             .send(series);
@@ -39,13 +44,13 @@ async function getSeries(req, res) {
     }
 }
 
-async function getComics(req, res) {
+async function getComics(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    let gremlinQuery = `g.V("${id}").in("issuePartOf")`;
+    let gremlinQuery: string = `g.V("${id}").in("issuePartOf")`;
 
     try {
-        const dbComics = await gremlinClient.submit(gremlinQuery, {});
-        const comics = dbComics._items.map(dbComic => {
+        const dbComics: DbResponse = await gremlinClient.submit(gremlinQuery, {});
+        const comics: Comic[] = dbComics._items.map(dbComic => {
             return mapDbComic(dbComic);
         });
 
