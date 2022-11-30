@@ -1,9 +1,12 @@
 import axios from 'axios'
 
+import type { Comic } from '../types/comic';
+import type { Series } from '../types/series';
+
 import config from '../config.js';
 
-async function getAllSeries(searchTerm = '') {
-    let seriesUrl = `${config.api.rootUrl}/series`;
+async function getAllSeries(searchTerm: string = ''): Promise<Series[]> {
+    let seriesUrl: string = `${config.api.rootUrl}/series`;
     if (searchTerm) {
         seriesUrl += `?series=${searchTerm}`;
     }
@@ -12,14 +15,14 @@ async function getAllSeries(searchTerm = '') {
     return data;
 }
 
-async function getSeries(seriesId) {
-    let seriesUrl = `${config.api.rootUrl}/series/${seriesId}`;
+async function getSeries(seriesId: string): Promise<Series> {
+    let seriesUrl: string = `${config.api.rootUrl}/series/${seriesId}`;
     const { data } = await axios(seriesUrl);
     return data;
 }
 
-async function getComics(seriesId) {
-    let seriesComicsUrl = `${config.api.rootUrl}/series/${seriesId}/comics`;
+async function getComics(seriesId: string): Promise<Comic[]> {
+    let seriesComicsUrl: string = `${config.api.rootUrl}/series/${seriesId}/comics`;
     const { data } = await axios(seriesComicsUrl);
     return data;
 }

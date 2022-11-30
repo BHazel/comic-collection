@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+import type { Comic, ComicType } from '../types/comic';
+
 import config from '../config.js';
 
-async function getComics(searchTerm = '') {
-    let comicsUrl = `${config.api.rootUrl}/comics`;
+async function getComics(searchTerm: string = ''): Promise<Comic[]> {
+    let comicsUrl: string = `${config.api.rootUrl}/comics`;
     if (searchTerm) {
         comicsUrl += `?search=${searchTerm}`;
     }
@@ -12,18 +14,18 @@ async function getComics(searchTerm = '') {
     return data;
 }
 
-async function getComic(comicId) {
-    let comicUrl = `${config.api.rootUrl}/comics/${comicId}`;
+async function getComic(comicId: string): Promise<Comic> {
+    let comicUrl: string = `${config.api.rootUrl}/comics/${comicId}`;
     const { data } = await axios(comicUrl);
     return data;
 }
 
-async function getSequel(comicId, type) {
+async function getSequel(comicId: string, type: ComicType): Promise<Comic | void> {
     if (type !== 'series' && type !== 'reading') {
         return;
     }
 
-    let sequelUrl = `${config.api.rootUrl}/comics/${comicId}/sequel-${type}`;
+    let sequelUrl: string = `${config.api.rootUrl}/comics/${comicId}/sequel-${type}`;
     const { data } = await axios(sequelUrl);
     return data;
 }
