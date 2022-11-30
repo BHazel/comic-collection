@@ -2,11 +2,11 @@ import gremlin from 'gremlin';
 
 import config from '../config';
 
-const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(
+const authenticator: gremlin.driver.auth.PlainTextSaslAuthenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(
     config.database.username,
     config.database.password);
 
-const gremlinClient = new gremlin.driver.Client(
+const gremlinClient: gremlin.driver.Client = new gremlin.driver.Client(
     config.database.endpoint,
     {
         authenticator,
