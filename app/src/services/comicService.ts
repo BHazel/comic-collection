@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import config from '../config.mjs';
+import config from '../config.js';
 
 async function getComics(searchTerm = '') {
     let comicsUrl = `${config.api.rootUrl}/comics`;

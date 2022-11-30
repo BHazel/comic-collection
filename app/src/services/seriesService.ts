@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import config from '../config.mjs';
+import config from '../config.js';
 
 async function getAllSeries(searchTerm = '') {
     let seriesUrl = `${config.api.rootUrl}/series`;
