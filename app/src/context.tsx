@@ -1,21 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { Context, createContext, useContext, useEffect, useState } from 'react';
+
+import type { Comic } from './types/comic';
+import type { ComicCollectionContext } from './types/context';
+import type { Series } from './types/series';
 
 import { getComics } from './services/comicService';
 import { getAllSeries } from './services/seriesService';
 
-const AppContext = React.createContext();
+const AppContext: Context<ComicCollectionContext> = createContext<ComicCollectionContext | undefined>(undefined);
 
-const AppProvider = ({ children }) => {
-    const [comics, setComics] = useState([]);
-    const [series, setSeries] = useState([]);
+const AppProvider = ({ children }): JSX.Element => {
+    const [comics, setComics] = useState<Comic[]>([]);
+    const [series, setSeries] = useState<Series[]>([]);
 
     useEffect(() => {
-        Promise.all([
-            getComics().catch(error => 'error'),
-            getAllSeries().catch(error => 'error')
+        Promise.all<[Promise<Comic[]>, Promise<Series[]>]>([
+            getComics().catch(error => undefined),
+            getAllSeries().catch(error => undefined)
         ]).then(responses => {
-            setComics(responses[0] !== 'error' ? responses[0] : false);
-            setSeries(responses[1] !== 'error' ? responses[1] : false);
+            setComics(responses[0]);
+            setSeries(responses[1]);
         });
     }, []);
 
@@ -26,7 +30,7 @@ const AppProvider = ({ children }) => {
     );
 };
 
-const useGlobalContext = () => {
+const useGlobalContext = (): ComicCollectionContext => {
     return useContext(AppContext);
 }
 
