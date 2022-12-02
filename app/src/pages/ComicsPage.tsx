@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { useGlobalContext } from '../context';
 
-const Comics = () => {
+const ComicsPage = (): JSX.Element => {
     const { comics } = useGlobalContext();
 
     return (
@@ -31,4 +31,4 @@ const Comics = () => {
     );
 };
 
-export default Comics;
+export default ComicsPage;

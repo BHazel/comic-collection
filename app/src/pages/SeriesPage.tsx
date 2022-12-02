@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import type { Comic } from '../types/comic';
+import type { Series } from '../types/series';
+
 import { getComics, getSeries } from '../services/seriesService';
 
-const Series = () => {
-    const { id } = useParams();
-    const [series, setSeries] = useState({});
-    const [comics, setComics] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+const SeriesPage = (): JSX.Element => {
+    const { id } = useParams<string>();
+    const [series, setSeries] = useState<Series>();
+    const [comics, setComics] = useState<Comic[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        Promise.all([
+        Promise.all<[Promise<Series>, Promise<Comic[]>]>([
             getSeries(id),
             getComics(id)
         ]).then(responses => {
@@ -58,11 +61,9 @@ const Series = () => {
                 <div className='col'>
                     <p><img className='img-fluid' src={series.imageUrl} /></p>
                 </div>
-            </div>
-
-            
+            </div> 
         </main>
     )
 };
 
-export default Series;
+export default SeriesPage;
