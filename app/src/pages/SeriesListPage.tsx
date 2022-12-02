@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { useGlobalContext } from '../context';
 
-const SeriesList = () => {
+const SeriesListPage = (): JSX.Element => {
     const { series } = useGlobalContext();
 
     return (
@@ -29,4 +29,4 @@ const SeriesList = () => {
     );
 };
 
-export default SeriesList;
+export default SeriesListPage;

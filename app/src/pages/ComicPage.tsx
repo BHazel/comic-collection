@@ -1,32 +1,34 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import type { Comic } from '../types/comic';
+
 import { getComic, getSequel } from '../services/comicService';
 
-const Comic = () => {
-    const { id } = useParams();
-    const [isLoading, setIsLoading] = useState(true);
-    const [comic, setComic] = useState({});
-    const [sequelReading, setSequelReading] = useState(false);
-    const [sequelSeries, setSequelSeries] = useState(false);
+const ComicPage = (): JSX.Element => {
+    const { id } = useParams<string>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [comic, setComic] = useState<Comic>();
+    const [sequelReading, setSequelReading] = useState<Comic | undefined>();
+    const [sequelSeries, setSequelSeries] = useState<Comic | undefined>();
 
-    function renderSequelLink(sequel) {
-        if (Object.keys(sequel).length > 0) {
-            return <Link to={`/comics/${sequel.id}`}>{sequel.title}</Link>
+    function renderSequelLink(sequel: Comic): JSX.Element {
+        if (sequel) {
+            return <Link to={`/comics/${sequel.id}`}>{sequel.title}</Link>;
         } else {
-            return 'No sequel.'
+            return <>No sequel.</>;
         }
     }
 
     useEffect(() => {
-        Promise.all([
+        Promise.all<[Promise<Comic>, Promise<Comic>, Promise<Comic>]>([
             getComic(id),
-            getSequel(id, 'series').catch(error => 'error'),
-            getSequel(id, 'reading').catch(error => 'error')
+            getSequel(id, 'series').catch(error => undefined),
+            getSequel(id, 'reading').catch(error => undefined)
         ]).then(responses => {
             setComic(responses[0]);
-            setSequelSeries(responses[1] !== 'error' ? responses[1] : false);
-            setSequelReading(responses[2] !== 'error' ? responses[2] : false);
+            setSequelSeries(responses[1]);
+            setSequelReading(responses[2]);
             setIsLoading(false);
         });
     }, [id, isLoading]);
@@ -47,7 +49,7 @@ const Comic = () => {
                     <p><strong>Publication Date:</strong> {comic.publicationDate}</p>
                     <p><strong>Story:</strong> {comic.storyTitle}</p>
                     <p><strong>Issue: </strong> {comic.issue}</p>
-                    <p><strong>Summary: </strong>{comic.story ? comic.story : "No Summary"}</p>
+                    <p><strong>Summary: </strong>{comic.summary ? comic.summary : "No Summary"}</p>
                     <p><strong>Sequel:</strong></p>
                     <ul>
                         <li><strong>Series: </strong>{renderSequelLink(sequelSeries)}</li>
@@ -63,4 +65,4 @@ const Comic = () => {
     );
 };
 
-export default Comic;
+export default ComicPage;
