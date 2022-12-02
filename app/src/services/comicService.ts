@@ -20,9 +20,9 @@ async function getComic(comicId: string): Promise<Comic> {
     return data;
 }
 
-async function getSequel(comicId: string, type: ComicType): Promise<Comic | void> {
+async function getSequel(comicId: string, type: ComicType): Promise<Comic> {
     if (type !== 'series' && type !== 'reading') {
-        return;
+        return undefined;
     }
 
     let sequelUrl: string = `${config.api.rootUrl}/comics/${comicId}/sequel-${type}`;
