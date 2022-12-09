@@ -1,8 +1,9 @@
 type Series = {
     id: string,
     title: string,
-    url: string,
-    imageUrl: string
+    publicationYear: number,
+    url?: string,
+    imageUrl?: string
 }
 
 export {
