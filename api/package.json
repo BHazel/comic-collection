@@ -4,7 +4,9 @@
     "description": "The API for working with the comic collection.",
     "main": "./src/app.mjs",
     "scripts": {
-        "start": "tsc && nodemon ./dist/app.js"
+        "build": "tsc",
+        "start": "npm run build && nodemon ./dist/app.js",
+        "test": "jest"
     },
     "author": "Benedict W. Hazel",
     "license": "ISC",
