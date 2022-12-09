@@ -11,5 +11,9 @@
         "sourceMap": true,
         "strict": false,
         "strictNullChecks": true
-    }
+    }, "include": [
+        "src/**/*"
+    ], "exclude": [
+        "jest.config.js"
+    ]
 }
